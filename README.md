@@ -1,1 +1,1 @@
-# JS-TTT
+# JS-Tic Tac Toe
