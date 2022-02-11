@@ -7,45 +7,46 @@ let turn = "O";
 const checkWinner = (target) => { // target = td
   const rowIndex = target.parentNode.rowIndex; // tr의 index(0, 1, 2줄)
   const cellIndex = target.cellIndex; // td의 index(0, 1, 2칸)
-let hasWinner = false; // 승자가 있으면 hasWinner = true;
-  if( // 가로줄 turn 일치 검사
-    rows[rowIndex][0].innerText === turn &&
-    rows[rowIndex][1].innerText === turn &&
-    rows[rowIndex][2].innerText === turn
+  let hasWinner = false; // 승자가 있으면 hasWinner = true;
+    if( // 가로줄 turn 일치 검사
+      rows[rowIndex][0].innerText === turn &&
+      rows[rowIndex][1].innerText === turn &&
+      rows[rowIndex][2].innerText === turn
+      ){
+        hasWinner = true;
+      }
+    if( // 세로줄 turn 일치 검사
+      rows[0][cellIndex].innerText === turn &&
+      rows[1][cellIndex].innerText === turn &&
+      rows[2][cellIndex].innerText === turn
     ){
       hasWinner = true;
     }
-  if( // 세로줄 turn 일치 검사
-    rows[0][cellIndex].innerText === turn &&
-    rows[1][cellIndex].innerText === turn &&
-    rows[2][cellIndex].innerText === turn
-  ){
-    hasWinner = true;
-  }
-  if( // 대각선 turn 일치 검사
-    rows[0][0].innerText === turn &&
-    rows[1][1].innerText === turn &&
-    rows[2][2].innerText === turn
-  ){
-    hasWinner = true;
-  }if( // 반대 대각선 turn 일치 검사
-    rows[0][2].innerText === turn &&
-    rows[1][1].innerText === turn &&
-    rows[2][0].innerText === turn
-  ){
-    hasWinner = true;
-  }
-  return hasWinner; // 승자가 있으면 return true, 없으면 return false
+    if( // 대각선 turn 일치 검사
+      rows[0][0].innerText === turn &&
+      rows[1][1].innerText === turn &&
+      rows[2][2].innerText === turn
+    ){
+      hasWinner = true;
+    }if( // 반대 대각선 turn 일치 검사
+      rows[0][2].innerText === turn &&
+      rows[1][1].innerText === turn &&
+      rows[2][0].innerText === turn
+    ){
+      hasWinner = true;
+    }
+    return hasWinner; // 승자가 있으면 return true, 없으면 return false
 };
 
 // 승리, 무승부를 가리는 함수
 const checkWinnerAndDraw = (target) => {
+  // 승자가 있으면
   const hasWinner = checkWinner(target); // true, false 값 반환
-  if(hasWinner){ // 승자가 있으면
+  if(hasWinner){
     $result.innerText = `🎉 ${turn}님의 승리! 🎉`;
     $table.removeEventListener("click", playGame);
     return;
-  } 
+  }
   // 무승부이면(칸이 모두 다 차있는 경우)
   const draw = rows.flat().every((cell) => cell.innerText);
   // every 메서드 = 모든 조건이 true면 true 반환
@@ -56,6 +57,7 @@ const checkWinnerAndDraw = (target) => {
   }
   // 턴 넘기기
   if(turn === "O"){
+    // target.style.backgroundColor = "lightblue";
     turn = "X";
   } else if(turn === "X"){
     turn = "O";
@@ -69,6 +71,7 @@ const playGame = (e) => {
     return;
   } else {
     e.target.innerText = turn;
+    e.target.style.backgroundColor = "lightblue";
     checkWinnerAndDraw(e.target);
     if(turn === "X"){ // 컴퓨터의 턴일 경우
       clickable = false;
@@ -77,6 +80,7 @@ const playGame = (e) => {
         // innerText가 없는 칸을 추려서 emptyCells에 저장
         const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         randomCell.innerText = "X";
+        randomCell.style.backgroundColor = "lightpink";
         checkWinnerAndDraw(e.target);
         clickable = true;
       }, 1000);
