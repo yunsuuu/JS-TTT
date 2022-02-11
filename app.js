@@ -132,7 +132,7 @@ for(let i = 0; i < 3; i++){ // <tr> 태그 3번 생성 후 <table> 태그 안에
   const cells = []; // 작은 배열 3개
   $table.append($tr);
   for(let j = 0; j < 3; j++){ // <td> 태그 3번 생성 후 <tr> 태그 안에 넣기
-    const $td = document.createElement("td");
+    const $td = document.createElement("td"); 
     $tr.append($td);
     cells.push($td); // 작은 배열 안에 $td 3개 넣기, [td, td, td] 이걸 총 3줄로
   }
